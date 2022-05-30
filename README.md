@@ -16,4 +16,4 @@
 - Организация файловой структуры по БЭМ
 
 ###Ссылка на проект
-[Ссылка на gh-pages](http://example.com/)
+[Ссылка на gh-pages](https://lntegrtor.github.io/mesto-react)
