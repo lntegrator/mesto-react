@@ -1,4 +1,4 @@
-import {myToken} from './constants.js'
+import { myToken, groupId } from './constants.js'
 
 class Api{
     constructor(headers, cohortId){
@@ -27,7 +27,7 @@ class Api{
             method: 'POST',
             headers: this._headers,
             body: JSON.stringify({
-                name: cardInfo.name,
+                name: cardInfo.title,
                 link: cardInfo.link
             })
         }))
@@ -38,18 +38,18 @@ class Api{
             method: 'PATCH',
             headers: this._headers,
             body: JSON.stringify({
-                name: info.personName,
-                about: info.personDescription
+                name: info.name,
+                about: info.about
             })
         }))
     }
 
-    patchAvatar(avatarInfo){
+    patchAvatar(link){
         return this._sendRequest(fetch(`https://mesto.nomoreparties.co/v1/${this._cohortId}/users/me/avatar `, {
             method: 'PATCH',
             headers: this._headers,
             body: JSON.stringify({
-                avatar: avatarInfo.avatarLink
+                avatar: link
             })
         }))
     }
@@ -61,14 +61,14 @@ class Api{
         }))
     }
 
-    likeCard(groupId, id){
+    likeCard(id){
         return this._sendRequest(fetch(`https://mesto.nomoreparties.co/v1/${groupId}/cards/${id}/likes `, {
             method: 'PUT',
             headers: this._headers
         }))
     }
 
-    unlikeCard(groupId, id){
+    unlikeCard(id){
         return this._sendRequest(fetch(`https://mesto.nomoreparties.co/v1/${groupId}/cards/${id}/likes `, {
             method: 'DELETE',
             headers: this._headers
