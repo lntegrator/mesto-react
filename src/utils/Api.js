@@ -1,13 +1,13 @@
-import { myToken, groupId } from './constants.js'
+import { myToken } from './constants.js'
 
 class Api{
-    constructor(headers, cohortId){
+    constructor(headers, baseUrl){
         this._headers = headers;
-        this._cohortId = cohortId;
+        this._baseUrl = baseUrl;
     }
 
     getInfo(){
-        return this._sendRequest(fetch(`https://nomoreparties.co/v1/${this._cohortId}/users/me`, 
+        return this._sendRequest(fetch(`${this._baseUrl}/users/me`, 
         {
             method: 'GET',
             headers: this._headers
@@ -16,14 +16,14 @@ class Api{
 
     getCards(){
         return this._sendRequest(
-            fetch(`https://mesto.nomoreparties.co/v1/${this._cohortId}/cards`,{
+            fetch(`${this._baseUrl}/cards`,{
             method: 'GET',
             headers: this._headers
         }))
     }
 
     postCard(cardInfo){
-        return this._sendRequest(fetch(`https://mesto.nomoreparties.co/v1/${this._cohortId}/cards `, {
+        return this._sendRequest(fetch(`${this._baseUrl}/cards`, {
             method: 'POST',
             headers: this._headers,
             body: JSON.stringify({
@@ -34,7 +34,7 @@ class Api{
     }
 
     patchInfo(info){
-        return this._sendRequest(fetch(`https://mesto.nomoreparties.co/v1/${this._cohortId}/users/me`, {
+        return this._sendRequest(fetch(`${this._baseUrl}/users/me`, {
             method: 'PATCH',
             headers: this._headers,
             body: JSON.stringify({
@@ -45,7 +45,7 @@ class Api{
     }
 
     patchAvatar(link){
-        return this._sendRequest(fetch(`https://mesto.nomoreparties.co/v1/${this._cohortId}/users/me/avatar `, {
+        return this._sendRequest(fetch(`${this._baseUrl}/users/me/avatar `, {
             method: 'PATCH',
             headers: this._headers,
             body: JSON.stringify({
@@ -55,21 +55,21 @@ class Api{
     }
 
     deleteCard(id){
-        return this._sendRequest(fetch(`https://mesto.nomoreparties.co/v1/${this._cohortId}/cards/${id}`, {
+        return this._sendRequest(fetch(`${this._baseUrl}/cards/${id}`, {
             method: 'DELETE',
             headers: this._headers
         }))
     }
 
     likeCard(id){
-        return this._sendRequest(fetch(`https://mesto.nomoreparties.co/v1/${groupId}/cards/${id}/likes `, {
+        return this._sendRequest(fetch(`${this._baseUrl}/cards/${id}/likes `, {
             method: 'PUT',
             headers: this._headers
         }))
     }
 
     unlikeCard(id){
-        return this._sendRequest(fetch(`https://mesto.nomoreparties.co/v1/${groupId}/cards/${id}/likes `, {
+        return this._sendRequest(fetch(`${this._baseUrl}/cards/${id}/likes `, {
             method: 'DELETE',
             headers: this._headers
         }))
@@ -93,6 +93,6 @@ class Api{
 const api = new Api({
     authorization: myToken,
     'Content-Type': 'application/json'
-}, 'cohort-40')
+}, 'https://nomoreparties.co/v1/cohort-40')
 
 export {api}

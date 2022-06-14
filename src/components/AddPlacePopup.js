@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
 
 function AddPlacePopup({isOpen, onClose, onAddPlace }){
 
     const [title, setTitle] = useState('');
     const [link, setLink] = useState('');
+
+    useEffect(() => {
+        setTitle('');
+        setLink('');
+    }, [isOpen])
 
     function handleChangeTitle(e){
         setTitle(e.target.value);
@@ -37,7 +42,7 @@ function AddPlacePopup({isOpen, onClose, onAddPlace }){
             type="text"
             className="form__field form__field_type_mesto"
             placeholder="Название"
-            defaultValue=""
+            value={title}
             required
             minLength="2"
             maxLength="30"
@@ -50,7 +55,7 @@ function AddPlacePopup({isOpen, onClose, onAddPlace }){
             id="link-input"
             className="form__field form__field_type_link"
             placeholder="Ссылка на картинку"
-            defaultValue=""
+            value={link}
             required
             onChange={handleChangeLink}
           />

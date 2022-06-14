@@ -20,7 +20,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
     useEffect(() => {
         setName(currentUser.name);
         setDescription(currentUser.about);
-    }, [currentUser])
+    }, [currentUser, isOpen])
 
     //Обработчик формы
     function handleSubmit(e){
@@ -46,7 +46,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
             type="text"
             className="form__field form__field_type_name"
             placeholder="Введите имя"
-            defaultValue={name}
+            value={name || ""}
             required
             minLength="2"
             maxLength="40"
@@ -59,7 +59,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
             type="text"
             className="form__field form__field_type_job"
             placeholder="Введите специальность"
-            defaultValue={description}
+            value={description  || ""}
             required
             minLength="2"
             maxLength="200"

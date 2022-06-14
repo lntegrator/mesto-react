@@ -1,7 +1,8 @@
 function Footer(){
+  const year = new Date().getFullYear()
     return(
         <footer className="footer">
-          <p className="footer__copyright">© 2022 Support Ukraine</p>
+          <p className="footer__copyright">© {year} Support Ukraine</p>
       </footer>
     )
 }

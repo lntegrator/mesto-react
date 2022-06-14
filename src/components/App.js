@@ -10,20 +10,22 @@ import { api } from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function App() {
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
 
+  const isOpen = isEditProfilePopupOpen || isAddPlacePopupOpen || isEditAvatarPopupOpen || selectedCard
+
   //Коллбэки кликов по кнопкам
   const handleEditAvatarClick = () => setEditAvatarPopupOpen(true);
-  const handleEditProfileClick = () => setEditProfilePopupOpen(true);
+  const handleEditProfileClick = () => setIsEditProfilePopupOpen(true);
   const handleAddPlaceClick = () => setAddPlacePopupOpen(true);
   const closeAllPopups = () => {
     setAddPlacePopupOpen(false);
-    setEditProfilePopupOpen(false);
+    setIsEditProfilePopupOpen(false);
     setEditAvatarPopupOpen(false);
     setSelectedCard(null);
   };
@@ -45,7 +47,20 @@ function App() {
     .catch((err) => {
       console.log(err);
     });
-  }, [])
+
+    function closeByEscape(evt) {
+      if(evt.key === 'Escape') {
+        closeAllPopups();
+      }
+    }
+    if(isOpen) {
+      document.addEventListener('keydown', closeByEscape);
+      return () => {
+        document.removeEventListener('keydown', closeByEscape);
+      }
+    }
+
+  }, [isOpen])
 
   //Функция лайка карточки
   function handleCardLike(card){
@@ -105,12 +120,14 @@ function App() {
 
   //Функция сохранения карточки
   function handleAddPlaceSubmit(cardInfo){
-    console.log(cardInfo)
     api.postCard(cardInfo)
     .then((newCard) => {
       setCards([newCard, ...cards]); 
       closeAllPopups();
     })
+    .catch((err) => {
+      console.log(err);
+    });  
   }
 
   return (

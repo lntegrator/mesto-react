@@ -12,7 +12,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }){
 
     React.useEffect(() => {
         linkInput.current.value = ""
-    }, [])
+    }, [isOpen])
 
     return(
         <PopupWithForm
