@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -10,12 +10,12 @@ import { api } from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function App() {
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
-  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState(null);
-  const [currentUser, setCurrentUser] = React.useState({});
-  const [cards, setCards] = React.useState([]);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(null);
+  const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
 
   const isOpen = isEditProfilePopupOpen || isAddPlacePopupOpen || isEditAvatarPopupOpen || selectedCard
 
@@ -31,7 +31,7 @@ function App() {
   };
 
   //Получаем данные
-  React.useEffect(() => {
+  useEffect(() => {
     api.getInfo()
     .then((res) => {
       setCurrentUser(res);
@@ -47,7 +47,10 @@ function App() {
     .catch((err) => {
       console.log(err);
     });
+  })
 
+  //Эффект для закрытия попапа ESC
+  useEffect(() => {
     function closeByEscape(evt) {
       if(evt.key === 'Escape') {
         closeAllPopups();
@@ -59,7 +62,6 @@ function App() {
         document.removeEventListener('keydown', closeByEscape);
       }
     }
-
   }, [isOpen])
 
   //Функция лайка карточки
