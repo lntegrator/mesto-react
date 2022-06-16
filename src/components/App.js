@@ -47,7 +47,7 @@ function App() {
     .catch((err) => {
       console.log(err);
     });
-  }, [isOpen])
+  }, [])
 
   //Эффект для закрытия попапа ESC
   useEffect(() => {
